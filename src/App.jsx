@@ -61,11 +61,11 @@ export default function App() {
         <div ref={mainRef} className="relative min-h-screen bg-background overflow-hidden selection:bg-accent selection:text-primary">
 
             <nav className="island-nav nav-dark fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-transparent backdrop-blur-xl border border-transparent px-6 py-3 rounded-full flex items-center gap-8 md:gap-12 shadow-2xl transition-all duration-500 w-[90%] md:w-max justify-between md:justify-center">
-                <a href="#" className="font-sans font-bold nav-text text-xl tracking-tighter transition-colors duration-500">Busy Beaver</a>
-                <div className="hidden md:flex items-center gap-8 font-mono text-xs uppercase tracking-widest nav-link transition-colors duration-500">
-                    <a href="#features" className="hover:-translate-y-px font-medium transition-colors">Services</a>
-                    <a href="#gallery" className="hover:-translate-y-px font-medium transition-colors">Gallery</a>
-                    <a href="#reviews" className="hover:-translate-y-px font-medium transition-colors">Reviews</a>
+                <a href="#" className="font-sans font-bold nav-text text-xl tracking-tighter">Busy Beaver</a>
+                <div className="hidden md:flex items-center gap-8 font-mono text-xs uppercase tracking-widest nav-link">
+                    <a href="#features" className="hover:-translate-y-px font-medium">Services</a>
+                    <a href="#gallery" className="hover:-translate-y-px font-medium">Gallery</a>
+                    <a href="#reviews" className="hover:-translate-y-px font-medium">Reviews</a>
                 </div>
                 <a href="#contact" className="relative overflow-hidden bg-accent text-primary px-5 py-2 rounded-full font-sans font-bold text-sm tracking-wide hover:scale-105 active:scale-[0.98] transition-transform group whitespace-nowrap">
                     <span className="relative z-10">Get Quote</span>

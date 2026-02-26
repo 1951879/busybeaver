@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .clip-text {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+/* Navbar Dynamic Theming */
+.nav-text,
+.nav-link {
+  transition: color 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.nav-dark .nav-text {
+  color: #FAF8F5;
+  /* text-background */
+}
+
+.nav-dark .nav-link {
+  color: rgba(250, 248, 245, 0.8);
+  /* text-background/80 */
+}
+
+.nav-dark .nav-link a:hover {
+  color: #C9A84C;
+  /* hover:text-accent */
+}
+
+.nav-light .nav-text {
+  color: #0D0D12;
+  /* text-primary */
+}
+
+.nav-light .nav-link {
+  color: rgba(13, 13, 18, 0.8);
+  /* text-primary/80 */
+}
+
+.nav-light .nav-link a:hover {
+  color: #C9A84C;
+  /* hover:text-accent */
+}
+
+a,
+button {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}

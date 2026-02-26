@@ -25,8 +25,24 @@ export default function Contact() {
         }));
     };
 
+    const formatPhoneNumber = (value) => {
+        if (!value) return value;
+        const phoneNumber = value.replace(/[^\d]/g, '');
+        const phoneNumberLength = phoneNumber.length;
+        if (phoneNumberLength < 4) return phoneNumber;
+        if (phoneNumberLength < 7) {
+            return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
+        }
+        return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3, 6)}-${phoneNumber.slice(6, 10)}`;
+    };
+
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        if (name === 'phone') {
+            setFormData({ ...formData, [name]: formatPhoneNumber(value) });
+        } else {
+            setFormData({ ...formData, [name]: value });
+        }
     };
 
     const handleSubmit = (e) => {
@@ -119,21 +135,31 @@ export default function Contact() {
 
                         <div className="grid grid-cols-2 gap-6">
                             <div className="col-span-2 flex flex-col gap-3">
-                                <label className="font-mono text-xs tracking-widest uppercase text-foreground/60">Service Type</label>
+                                <label className="font-mono text-xs tracking-widest uppercase text-foreground/60">Service Type <span className="lowercase opacity-60 font-sans tracking-normal">(optional)</span></label>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                    {["Tree Removal", "Pruning & Trimming", "Stump Grinding", "Storm Clean-up", "Plant Health Care", "Other"].map((service) => (
-                                        <label key={service} className="flex items-center gap-2 font-sans text-sm cursor-pointer hover:bg-foreground/5 p-1.5 -ml-1.5 rounded-lg transition-colors w-fit">
-                                            <input
-                                                type="checkbox"
-                                                name="serviceType"
-                                                value={service}
-                                                checked={formData.serviceType.includes(service)}
-                                                onChange={handleCheckboxChange}
-                                                className="accent-accent w-4 h-4 rounded"
-                                            />
-                                            <span className="text-foreground/90 leading-none mt-0.5">{service}</span>
-                                        </label>
-                                    ))}
+                                    {["Tree Removal", "Pruning & Trimming", "Stump Grinding", "Storm Clean-up", "Plant Health Care", "Other"].map((service) => {
+                                        const isChecked = formData.serviceType.includes(service);
+                                        return (
+                                            <label key={service} className={`group flex items-center gap-3 font-sans text-sm cursor-pointer p-2 -ml-2 rounded-xl transition-all duration-300 w-fit ${isChecked ? 'text-primary' : 'text-foreground/70 hover:text-foreground'}`}>
+                                                <div className="relative flex items-center justify-center w-5 h-5">
+                                                    <input
+                                                        type="checkbox"
+                                                        name="serviceType"
+                                                        value={service}
+                                                        checked={isChecked}
+                                                        onChange={handleCheckboxChange}
+                                                        className="absolute opacity-0 w-full h-full cursor-pointer z-10"
+                                                    />
+                                                    <div className={`w-full h-full border border-foreground/30 rounded flex items-center justify-center transition-all duration-300 ${isChecked ? 'bg-accent border-accent scale-100' : 'bg-transparent group-hover:border-foreground/50 scale-95'}`}>
+                                                        <svg className={`w-3 h-3 text-primary transition-all duration-300 ${isChecked ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                                <span className={`leading-none mt-0.5 transition-colors duration-300 ${isChecked ? 'font-medium text-foreground' : ''}`}>{service}</span>
+                                            </label>
+                                        );
+                                    })}
                                 </div>
                             </div>
                             <div className="col-span-2 flex flex-col gap-2">
@@ -152,8 +178,8 @@ export default function Contact() {
                         </div>
 
                         <div className="col-span-2 flex flex-col gap-2">
-                            <label className="font-mono text-xs tracking-widest uppercase text-foreground/60">Additional notes</label>
-                            <textarea name="message" value={formData.message} onChange={handleChange} required rows="4" className="bg-transparent border-b border-foreground/20 py-3 font-sans outline-none focus:border-accent transition-colors resize-none" placeholder="Describe the required intervention..."></textarea>
+                            <label className="font-mono text-xs tracking-widest uppercase text-foreground/60">Additional notes <span className="lowercase opacity-60 font-sans tracking-normal">(optional)</span></label>
+                            <textarea name="message" value={formData.message} onChange={handleChange} rows="4" className="bg-transparent border-b border-foreground/20 py-3 font-sans outline-none focus:border-accent transition-colors resize-none" placeholder="Describe the required intervention..."></textarea>
                         </div>
 
                         <button type="submit" className="mt-4 w-full bg-accent text-primary py-4 rounded-xl font-sans font-bold uppercase tracking-widest hover:scale-105 transition-transform">

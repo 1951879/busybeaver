@@ -96,7 +96,7 @@ export default function App() {
                         Western NY & Northwestern PA's Premier Tree Care Professionals.
                     </p>
                     <div className="hero-anim mt-10">
-                        <a href="#features" className="group inline-flex items-center gap-3 border border-background/20 rounded-full px-6 py-3 text-background font-mono text-xs uppercase tracking-widest hover:border-accent hover:text-accent transition-colors">
+                        <a href="#contact" className="group inline-flex items-center gap-3 border border-background/20 rounded-full px-6 py-3 text-background font-mono text-xs uppercase tracking-widest hover:border-accent hover:text-accent transition-colors">
                             Get a Free Quote
                             <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />

@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -6,6 +6,45 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Contact() {
     const containerRef = useRef(null);
+    const [formData, setFormData] = useState({
+        name: '',
+        phone: '',
+        address: '',
+        serviceType: [],
+        urgency: 'Standard',
+        message: ''
+    });
+
+    const handleCheckboxChange = (e) => {
+        const { value, checked } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            serviceType: checked
+                ? [...prev.serviceType, value]
+                : prev.serviceType.filter(type => type !== value)
+        }));
+    };
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const recipient = "can.of.spam@outlook.com"; // Replace with your actual email
+        const subject = encodeURIComponent(`New Service Request from ${formData.name}`);
+        const servicesList = formData.serviceType.length > 0 ? formData.serviceType.join(", ") : "None selected";
+
+        const body = encodeURIComponent(
+            `Name: ${formData.name}\n` +
+            `Phone: ${formData.phone}\n` +
+            `Address: ${formData.address}\n` +
+            `Service types: ${servicesList}\n` +
+            `Urgency: ${formData.urgency}\n\n` +
+            `Message:\n${formData.message}`
+        );
+        window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
+    };
 
     useLayoutEffect(() => {
         let ctx = gsap.context(() => {
@@ -32,7 +71,7 @@ export default function Contact() {
                     <div>
                         <h2 className="font-sans font-bold text-5xl md:text-7xl text-primary tracking-tighter mb-6">Get <span className="font-serif italic text-accent font-light">in Touch.</span></h2>
                         <p className="font-mono text-sm text-foreground/60 max-w-sm leading-relaxed tracking-wide">
-                            Tell us about your tree care needs. Our team will provide a free, no-obligation estimate right away.
+                            Tell us about your tree care needs. Our team will provide a free, no-obligation estimate.
                         </p>
                     </div>
 
@@ -43,7 +82,7 @@ export default function Contact() {
                             </div>
                             <div>
                                 <span className="block font-mono text-xs uppercase tracking-widest mb-1 opacity-70 group-hover:text-primary">Call Us</span>
-                                <span className="block font-sans font-bold text-2xl group-hover:text-primary">(555) 123-4567</span>
+                                <span className="block font-sans font-bold text-2xl group-hover:text-primary">(888) 854-7463</span>
                             </div>
                         </a>
 
@@ -59,32 +98,66 @@ export default function Contact() {
                         <svg width="100" height="100" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="48" stroke="#0D0D12" strokeWidth="2" strokeDasharray="4 4" /></svg>
                     </div>
 
-                    <form className="relative z-10 flex flex-col gap-6" onSubmit={(e) => e.preventDefault()}>
+                    <form className="relative z-10 flex flex-col gap-6" onSubmit={handleSubmit}>
                         <h3 className="font-sans font-bold text-2xl text-primary mb-2">Request an Estimate</h3>
 
                         <div className="grid grid-cols-2 gap-6">
                             <div className="col-span-2 md:col-span-1 flex flex-col gap-2">
                                 <label className="font-mono text-xs tracking-widest uppercase text-foreground/60">Your Name</label>
-                                <input type="text" className="bg-transparent border-b border-foreground/20 py-3 font-sans outline-none focus:border-accent transition-colors" placeholder="John Doe" />
+                                <input type="text" name="name" value={formData.name} onChange={handleChange} required className="bg-transparent border-b border-foreground/20 py-3 font-sans outline-none focus:border-accent transition-colors" placeholder="John Doe" />
                             </div>
                             <div className="col-span-2 md:col-span-1 flex flex-col gap-2">
-                                <label className="font-mono text-xs tracking-widest uppercase text-foreground/60">Your Email</label>
-                                <input type="email" className="bg-transparent border-b border-foreground/20 py-3 font-sans outline-none focus:border-accent transition-colors" placeholder="john@example.com" />
+                                <label className="font-mono text-xs tracking-widest uppercase text-foreground/60">Phone Number</label>
+                                <input type="tel" name="phone" value={formData.phone} onChange={handleChange} required className="bg-transparent border-b border-foreground/20 py-3 font-sans outline-none focus:border-accent transition-colors" placeholder="(555) 123-4567" />
                             </div>
                         </div>
 
                         <div className="col-span-2 flex flex-col gap-2">
                             <label className="font-mono text-xs tracking-widest uppercase text-foreground/60">Property Address</label>
-                            <input type="text" className="bg-transparent border-b border-foreground/20 py-3 font-sans outline-none focus:border-accent transition-colors" placeholder="123 Oak St, Buffalo, NY" />
+                            <input type="text" name="address" value={formData.address} onChange={handleChange} required className="bg-transparent border-b border-foreground/20 py-3 font-sans outline-none focus:border-accent transition-colors" placeholder="123 Oak St, Buffalo, NY" />
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-6">
+                            <div className="col-span-2 flex flex-col gap-3">
+                                <label className="font-mono text-xs tracking-widest uppercase text-foreground/60">Service Type</label>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                    {["Tree Removal", "Pruning & Trimming", "Stump Grinding", "Storm Clean-up", "Plant Health Care", "Other"].map((service) => (
+                                        <label key={service} className="flex items-center gap-2 font-sans text-sm cursor-pointer hover:bg-foreground/5 p-1.5 -ml-1.5 rounded-lg transition-colors w-fit">
+                                            <input
+                                                type="checkbox"
+                                                name="serviceType"
+                                                value={service}
+                                                checked={formData.serviceType.includes(service)}
+                                                onChange={handleCheckboxChange}
+                                                className="accent-accent w-4 h-4 rounded"
+                                            />
+                                            <span className="text-foreground/90 leading-none mt-0.5">{service}</span>
+                                        </label>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="col-span-2 flex flex-col gap-2">
+                                <label className="font-mono text-xs tracking-widest uppercase text-foreground/60">Urgency</label>
+                                <div className="flex gap-4 pt-1">
+                                    <label className="flex items-center gap-2 font-sans text-sm cursor-pointer">
+                                        <input type="radio" name="urgency" value="Standard" checked={formData.urgency === 'Standard'} onChange={handleChange} className="accent-accent" />
+                                        <span>Standard</span>
+                                    </label>
+                                    <label className="flex items-center gap-2 font-sans text-sm cursor-pointer border-l border-foreground/20 pl-4">
+                                        <input type="radio" name="urgency" value="Urgent" checked={formData.urgency === 'Urgent'} onChange={handleChange} className="accent-accent" />
+                                        <span className="text-accent font-medium">Urgent</span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
 
                         <div className="col-span-2 flex flex-col gap-2">
-                            <label className="font-mono text-xs tracking-widest uppercase text-foreground/60">How can we help?</label>
-                            <textarea rows="4" className="bg-transparent border-b border-foreground/20 py-3 font-sans outline-none focus:border-accent transition-colors resize-none" placeholder="Describe the required intervention..."></textarea>
+                            <label className="font-mono text-xs tracking-widest uppercase text-foreground/60">Additional notes</label>
+                            <textarea name="message" value={formData.message} onChange={handleChange} required rows="4" className="bg-transparent border-b border-foreground/20 py-3 font-sans outline-none focus:border-accent transition-colors resize-none" placeholder="Describe the required intervention..."></textarea>
                         </div>
 
                         <button type="submit" className="mt-4 w-full bg-accent text-primary py-4 rounded-xl font-sans font-bold uppercase tracking-widest hover:scale-105 transition-transform">
-                            Send Request
+                            send through Email App
                         </button>
                     </form>
                 </div>

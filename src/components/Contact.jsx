@@ -164,14 +164,20 @@ export default function Contact() {
                             </div>
                             <div className="col-span-2 flex flex-col gap-2">
                                 <label className="font-mono text-xs tracking-widest uppercase text-foreground/60">Urgency</label>
-                                <div className="flex gap-4 pt-1">
-                                    <label className="flex items-center gap-2 font-sans text-sm cursor-pointer">
-                                        <input type="radio" name="urgency" value="Standard" checked={formData.urgency === 'Standard'} onChange={handleChange} className="accent-accent" />
-                                        <span>Standard</span>
+                                <div className="flex gap-6 pt-2">
+                                    <label className="group relative flex items-center gap-3 font-sans text-sm cursor-pointer w-fit">
+                                        <input type="radio" name="urgency" value="Standard" checked={formData.urgency === 'Standard'} onChange={handleChange} className="absolute opacity-0 w-0 h-0" />
+                                        <div className={`w-4 h-4 rounded-full border flex items-center justify-center transition-all duration-300 ${formData.urgency === 'Standard' ? 'border-primary' : 'border-foreground/30 group-hover:border-foreground/60'}`}>
+                                            <div className={`w-2 h-2 rounded-full bg-primary transition-all duration-300 ${formData.urgency === 'Standard' ? 'scale-100' : 'scale-0'}`} />
+                                        </div>
+                                        <span className={`leading-none mt-0.5 transition-colors duration-300 ${formData.urgency === 'Standard' ? 'text-foreground font-medium' : 'text-foreground/70 group-hover:text-foreground'}`}>Standard</span>
                                     </label>
-                                    <label className="flex items-center gap-2 font-sans text-sm cursor-pointer border-l border-foreground/20 pl-4">
-                                        <input type="radio" name="urgency" value="Urgent" checked={formData.urgency === 'Urgent'} onChange={handleChange} className="accent-accent" />
-                                        <span className="text-accent font-medium">Urgent</span>
+                                    <label className="group relative flex items-center gap-3 font-sans text-sm cursor-pointer w-fit">
+                                        <input type="radio" name="urgency" value="Urgent" checked={formData.urgency === 'Urgent'} onChange={handleChange} className="absolute opacity-0 w-0 h-0" />
+                                        <div className={`w-4 h-4 rounded-full border flex items-center justify-center transition-all duration-300 ${formData.urgency === 'Urgent' ? 'border-accent' : 'border-foreground/30 group-hover:border-foreground/60'}`}>
+                                            <div className={`w-2 h-2 rounded-full bg-accent transition-all duration-300 ${formData.urgency === 'Urgent' ? 'scale-100' : 'scale-0'}`} />
+                                        </div>
+                                        <span className={`leading-none mt-0.5 transition-colors duration-300 ${formData.urgency === 'Urgent' ? 'text-accent font-medium' : 'text-foreground/70 group-hover:text-foreground'}`}>Urgent</span>
                                     </label>
                                 </div>
                             </div>

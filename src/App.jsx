@@ -86,7 +86,7 @@ export default function App() {
                 <div className="relative z-20 max-w-5xl">
                     <h1 className="flex flex-col gap-2 md:gap-0">
                         <span className="hero-anim font-sans font-bold text-4xl md:text-5xl text-background tracking-tight uppercase">
-                            Elite Arboriculture meets
+                            Expert Arboriculture meets
                         </span>
                         <span className="hero-anim font-serif italic text-6xl md:text-8xl lg:text-[10rem] text-accent leading-[0.85] pr-8 font-light antialiased ml-[-4px]">
                             Precision.

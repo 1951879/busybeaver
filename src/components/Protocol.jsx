@@ -20,23 +20,12 @@ const AssessmentVisual = () => (
 const ExtractionVisual = () => (
     <div className="w-full h-full relative bg-[#1A1A1A] overflow-hidden flex items-center justify-center">
         <div className="absolute inset-0 bg-[radial-gradient(#2A2A35_1px,transparent_1px)] [background-size:20px_20px] opacity-20"></div>
-        <div className="absolute w-full h-[2px] bg-accent laser-scan shadow-[0_0_15px_#C9A84C]"></div>
     </div>
 );
 
 // Card 3: Waveform
 const ReclamationVisual = () => (
     <div className="w-full h-full relative flex items-center justify-center overflow-hidden">
-        <svg viewBox="0 0 200 50" className="w-full h-32 px-12">
-            <path
-                className="waveform-path"
-                d="M 0,25 Q 25,0 50,25 T 100,25 T 150,25 T 200,25"
-                fill="none"
-                stroke="#C9A84C"
-                strokeWidth="1"
-                strokeLinecap="round"
-            />
-        </svg>
     </div>
 );
 
@@ -53,20 +42,20 @@ export default function Protocol() {
                 ease: "none"
             });
 
-            // Scan laser
-            gsap.fromTo(".laser-scan",
-                { top: "0%" },
-                { top: "100%", duration: 2, repeat: -1, ease: "power1.inOut", yoyo: true }
-            );
+            // // Scan laser
+            // gsap.fromTo(".laser-scan",
+            //     { top: "0%" },
+            //     { top: "100%", duration: 2, repeat: -1, ease: "power1.inOut", yoyo: true }
+            // );
 
-            // Pulse wave
-            gsap.to(".waveform-path", {
-                strokeDasharray: "200",
-                strokeDashoffset: 400,
-                duration: 3,
-                repeat: -1,
-                ease: "none"
-            });
+            // // Pulse wave
+            // gsap.to(".waveform-path", {
+            //     strokeDasharray: "200",
+            //     strokeDashoffset: 400,
+            //     duration: 3,
+            //     repeat: -1,
+            //     ease: "none"
+            // });
 
             const cards = gsap.utils.toArray(".protocol-card");
 
@@ -81,20 +70,19 @@ export default function Protocol() {
                 });
 
                 // Add blur and scale down effect as next card comes up
-                if (i < cards.length - 1) {
-                    gsap.to(card, {
-                        scale: 0.9,
-                        opacity: 0.5,
-                        filter: "blur(20px)",
-                        ease: "none",
-                        scrollTrigger: {
-                            trigger: cards[i + 1],
-                            start: "top bottom",
-                            end: "top top",
-                            scrub: true,
-                        }
-                    });
-                }
+                // if (i < cards.length - 1) {
+                //     gsap.to(card, {
+                //         scale: 0.9,
+                //         opacity: 0.5,
+                //         ease: "none",
+                //         scrollTrigger: {
+                //             trigger: cards[i + 1],
+                //             start: "top bottom",
+                //             end: "top top",
+                //             scrub: true,
+                //         }
+                //     });
+                // }
             });
 
         }, containerRef);
